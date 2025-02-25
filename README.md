@@ -25,12 +25,12 @@ If you need docker desktop running to get access to the docker in the command li
 
 By default, it runs the `spaceship-titanic` task.
 ```sh
-inspect eval mlebench/mle_bench.py --model=openai/gpt-4o
+inspect eval mle_bench.py --model=openai/gpt-4o
 ```
 
 If you want to run a different set of tasks, use the following command:
 ```sh
-inspect eval mlebench/mle_bench.py -T split="mini.txt" --model=openai/gpt-4o
+inspect eval mle_bench.py -T split="mini.txt" --model=openai/gpt-4o
 ```
 
 mini is the set of tasks I showed in the demo - easy and small download size. You can edit this to try out different tasks or use "low.txt" to run the full MLEBench-Lite (but this is a 250GB download)
@@ -39,4 +39,18 @@ mini is the set of tasks I showed in the demo - easy and small download size. Yo
 
 This builds a new image from the previous one so make sure you have already run the above.
 
-Inside the Inspect log you will just see the INFO: updates from aide. After completion there will be a .html in aide_logs/. Open this in the browser to see all generated code and plans
+Inside the Inspect log you will just see the INFO: updates from aide. After completion there will be a .html in aide_logs/. Open this in the browser to see all generated code and plans.
+
+Run with
+
+```sh
+inspect eval aide.py
+```
+
+or 
+
+```sh
+inspect eval aide.py -T split="low.txt" -T timeout=240
+```
+
+where timeout is in seconds and per Sample.
