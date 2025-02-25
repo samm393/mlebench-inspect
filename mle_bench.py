@@ -1,17 +1,17 @@
 import json
 from pathlib import Path
 from textwrap import dedent
-import docker
+import docker # type: ignore
 
 from inspect_ai import Task, task
 from inspect_ai.dataset import MemoryDataset, Sample
-from inspect_ai.scorer import Score, Scorer, scorer, accuracy, stderr, mean, std
+from inspect_ai.scorer import Score, Scorer, scorer, accuracy, stderr
 from inspect_ai.solver import Solver, TaskState, basic_agent, system_message
 from inspect_ai.tool import bash
 from inspect_ai.util import SandboxEnvironmentSpec, sandbox
 
-from mlebench.data import download_and_prepare_dataset, is_dataset_prepared
-from mlebench.registry import registry
+from mlebench.data import download_and_prepare_dataset, is_dataset_prepared #  type: ignore
+from mlebench.registry import registry # type: ignore
 
 
 DATA_DIR = (Path.cwd() / "data").resolve()
@@ -71,7 +71,6 @@ def default_solver(max_messages: int = 30) -> Solver:
         "valid_submission": [accuracy(), stderr()],
         "above_median": [accuracy(), stderr()],
         "any_medal": [accuracy(), stderr()],
-        "score": [mean(), std()],
     }
 )
 def mle_bench_scorer() -> Scorer:
@@ -99,10 +98,9 @@ def mle_bench_scorer() -> Scorer:
                 "valid_submission": report_data.get("valid_submission", False),
                 "above_median": report_data.get("above_median", False),
                 "any_medal": report_data.get("any_medal", False),
-                "score": report_data.get("score", None)
             },
-            explanation=result.stdout
-        )   
+            explanation=result.stdout,
+        )
 
     return scorer
 
@@ -119,9 +117,10 @@ def get_compose_file(competition_id: str, force_rebuild: bool = False) -> str:
                 image: {IMAGE_NAME}
                 platform: linux/amd64
                 network_mode: none
+                entrypoint: ["/bin/sh", "-c", "rm -f /home/instructions_obfuscated.txt && exec /entrypoint.sh"]
                 volumes:
-                  - {DATA_DIR / competition_id / "prepared/public"}:/home/data:ro
-                  - {DATA_DIR / competition_id / "prepared/private"}:/private/data/{competition_id}/prepared/private:ro
+                  - {DATA_DIR / competition_id / "prepared" / "public"}:/home/data:ro
+                  - {DATA_DIR / competition_id / "prepared" / "private"}:/private/data/{competition_id}/prepared/private:ro
                 environment:
                   - COMPETITION_ID={competition_id}
                 x-local: true
@@ -130,7 +129,6 @@ def get_compose_file(competition_id: str, force_rebuild: bool = False) -> str:
                     limits:
                       cpus: '1'
         """))
-
 
         try:
             docker.from_env().images.get(IMAGE_NAME)
