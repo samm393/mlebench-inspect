@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 
 @solver
 def aide_solver(timeout: int | None = 60, aide_agent: AideAgentType = "aide") -> Solver:
-    print(timeout)
     async def solve(state: TaskState, generate: Generate) -> TaskState:
         log_task = asyncio.create_task(stream_logs("/home/output.log"))
 
