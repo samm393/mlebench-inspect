@@ -44,13 +44,13 @@ Inside the Inspect log you will just see the INFO: updates from aide. After comp
 Run with
 
 ```sh
-inspect eval aide.py
+inspect eval mle_bench_aide.py
 ```
 
 or 
 
 ```sh
-inspect eval aide.py -T split="low.txt" -T timeout=240
+inspect eval mle_bench_aide.py -T split="low.txt" -T timeout=240
 ```
 
 where timeout is in seconds and per Sample.
