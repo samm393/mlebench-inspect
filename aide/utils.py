@@ -17,6 +17,7 @@ AideAgentType = Literal[
     "aide/gpt-3.5-turbo-0125",
     "aide/gpt-3.5-dev",
     "aide/claude-3-5-sonnet",
+    "aide/claude-3-7-sonnet",
     "aide/llama-3.1-405b-instruct",
     "aide/gemini-1.5-pro",
     "aide/obfuscated"
