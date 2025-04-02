@@ -1,4 +1,9 @@
-aerial-cactus-identification
+# Low complexity
+
+## aerial-cactus-identification
+The score is area-under-the-curve. To get any medals, you need to have a perfect score (1.0).
+
+## Tasks without notes:
 aptos2019-blindness-detection
 denoising-dirty-documents
 dog-breed-identification

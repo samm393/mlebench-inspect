@@ -13,6 +13,7 @@ from inspect_ai.util import SandboxEnvironmentSpec, sandbox
 from mlebench.data import download_and_prepare_dataset, is_dataset_prepared
 from mlebench.registry import registry
 from prompts import prompts
+from functools import partial
 
 DATA_DIR = (Path.cwd() / "data").resolve()
 COMPOSE_FILES_DIR = (Path.cwd() / "cache" / "compose_files").resolve()
