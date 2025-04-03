@@ -3,6 +3,7 @@ from mlebench_inspect import mle_bench
 import numpy as np
 import os
 from multiprocessing import Pool
+import sys
 
 # task_name = "low.txt"
 model_name = "claude-3-7-sonnet-20250219"
@@ -11,7 +12,7 @@ provider = "anthropic"
 # provider = "openai"
 prompt_name = "version16"
 
-with open("splits/low.txt") as f:
+with open(f"splits/{sys.argv[1]}") as f:
     task_names = f.readlines()
 task_names = [x.strip() for x in task_names]
 
