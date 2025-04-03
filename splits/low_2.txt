@@ -1,0 +1,5 @@
+new-york-city-taxi-fare-prediction
+plant-pathology-2020-fgvc7
+random-acts-of-pizza
+ranzcr-clip-catheter-line-classification
+siim-isic-melanoma-classification
