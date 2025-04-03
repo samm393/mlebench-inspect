@@ -8,7 +8,7 @@ task_name = sys.argv[1]
 model_name = sys.argv[2]
 provider = sys.argv[3]
 target = float(sys.argv[4])  # Get target as command line argument
-use_docker = False  # Set based on Docker availability check
+use_docker = True
 
 # for prompt in ['version_36_monitor_response_1s', 'version_36_monitor_response_10s']:
 # for prompt in ['version36_full_transcript_and_monitor_1s_nomad2018']:

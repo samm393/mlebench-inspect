@@ -7,15 +7,6 @@ TASK_NAME="nomad2018-predict-transparent-conductors"
 MODEL_NAME="claude-3-7-sonnet-20250219"
 PROVIDER="anthropic"
 
-# Check if Docker is available and working
-if command -v docker &> /dev/null && docker ps &> /dev/null; then
-    DOCKER_AVAILABLE=True
-    echo "Docker is available, will use Docker for sandboxing"
-else
-    DOCKER_AVAILABLE=False
-    echo "Docker is not available, will use local sandbox"
-fi
-
 # Create a Python script to run a single target evaluation
 cat > run_eval.py << EOF
 import sys
@@ -28,7 +19,7 @@ task_name = sys.argv[1]
 model_name = sys.argv[2]
 provider = sys.argv[3]
 target = float(sys.argv[4])  # Get target as command line argument
-use_docker = ${DOCKER_AVAILABLE}  # Set based on Docker availability check
+use_docker = True
 
 # for prompt in ['version_36_monitor_response_1s', 'version_36_monitor_response_10s']:
 # for prompt in ['version36_full_transcript_and_monitor_1s_nomad2018']:
@@ -55,8 +46,8 @@ EOF
 # Run evaluations for each target in parallel
 for TARGET in 0.09; do # for nomad2018
 # for TARGET in 0.07 0.08 0.09; do # for nomad2018
-    python run_eval.py "$TASK_NAME" "$MODEL_NAME" "$PROVIDER" "$TARGET" &
-    echo "Started evaluation for target $TARGET"
+    python run_eval.py "$TASK_NAME" "$MODEL_NAME" "$PROVIDER" "$TARGET" "$DOCKER_AVAILABLE" &
+    echo "Started evaluation for target $TARGET (Using Docker: $DOCKER_AVAILABLE)"
 done
 
 # Wait for all background processes to complete
