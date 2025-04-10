@@ -2,6 +2,7 @@ import json
 import argparse
 import yaml
 from pathlib import Path
+import random
 from textwrap import dedent
 import docker
 
@@ -105,9 +106,11 @@ def mle_bench(
                     ),
                 )
             )
+    random.seed(42)
+    random.shuffle(samples)
 
     return Task(
-        dataset=MemoryDataset(samples=samples).shuffle(),
+        dataset=MemoryDataset(samples=samples),
         solver=default_solver(system_prompt_name, best_performance, target),
         scorer=mle_bench_scorer(),
         time_limit=time_limit,
